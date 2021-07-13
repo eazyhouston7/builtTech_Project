@@ -3,6 +3,8 @@
 require_once('Movie.php');
 require_once('Rental.php');
 require_once('Customer.php');
+// New
+require_once('Movie_Classifications.php');
 
 $rental1 = new Rental(
     new Movie(
@@ -33,3 +35,15 @@ $customer->addRental($rental3);
 
 echo $customer->statement();
 echo $customer->htmlStatement();
+
+
+Movie_Classifications::addClassification("HORROR", 4);
+Movie_Classifications::printClassifications();
+echo "<br>";
+Movie_Classifications::removeClassification("REGULAR");
+Movie_Classifications::addClassification("ADVENTURE", 5);
+Movie_Classifications::printClassifications();
+echo "<br>";
+Movie_Classifications::setPriceCode("ADVENTURE", 6);
+Movie_Classifications::printClassifications();
+echo "<br>";

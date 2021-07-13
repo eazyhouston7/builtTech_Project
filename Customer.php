@@ -12,6 +12,8 @@ class Customer
      */
     private $rentals;
 
+    
+
     /**
      * @param string $name
      */
