@@ -113,7 +113,7 @@
       foreach(array_keys(self::$classifications) as $classification)
         echo "Classification: ".$classification.", Price Code: ".self::getPriceCode($classification).
         " Initial Charge: ".self::getInitialCharge($classification)." Days Until Overdue: ".self::getDaysUntilOverdue($classification)
-        ." Overdue Charge Per Day: ".self::getOverdueChargePerDay($classification)." Extra Points: ".self::getextraPoints($classification)."<br>";
+        ." Overdue Charge Per Day: ".self::getOverdueChargePerDay($classification)." Extra Points: ".((bool)self::getextraPoints($classification) ? "true" : "false")."<br>";
     }
 
     /*
@@ -132,7 +132,8 @@
       if(self::classificationExists($classification)) {
         return self::$classifications[$classification];
       }
-      return null;
+      echo $classification;
+      //return null;
     }
 
     /*

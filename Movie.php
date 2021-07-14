@@ -16,14 +16,21 @@ class Movie
      */
     private $priceCode;
 
+    // New
+    private $classification;
+
     /**
      * @param string $name
      * @param int $priceCode
      */
-    public function __construct($name, $priceCode)
+    public function __construct($name, $priceCode, $classification)
     {
         $this->name = $name;
         $this->priceCode = $priceCode;
+        $this->classification = $classification;
+        if(!Movie_Classifications::classificationExists($classification)) {
+          Movie_Classifications::addClassification($classification, $priceCode);
+        }
     }
 
     /**
@@ -41,4 +48,9 @@ class Movie
     {
         return $this->priceCode;
     }
+
+    public function classification() {
+      return $this->classification;
+    }
+
 }

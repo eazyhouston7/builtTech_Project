@@ -35,6 +35,10 @@ class Customer
         return $this->name;
     }
 
+    public function rentals() {
+      return $this->rentals;
+    }
+
     /**
      * @param Rental $rental
      */
@@ -46,6 +50,10 @@ class Customer
     //new
     public function frequentRenterPoints() {
       return $this->frequentRenterPoints;
+    }
+
+    public function setFrequentRenterPoints($amount) {
+      $this->frequentRenterPoints += $amount;
     }
 
     //new
@@ -101,6 +109,8 @@ class Customer
 
         return $result;
     }
+
+
 
     /*
       Start of the htmlStatement() func
