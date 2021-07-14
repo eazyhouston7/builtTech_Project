@@ -39,11 +39,3 @@ echo $customer->htmlStatement();
 
 Movie_Classifications::addClassification("HORROR", 4);
 Movie_Classifications::printClassifications();
-echo "<br>";
-Movie_Classifications::removeClassification("REGULAR");
-Movie_Classifications::addClassification("ADVENTURE", 5);
-Movie_Classifications::printClassifications();
-echo "<br>";
-Movie_Classifications::setPriceCode("ADVENTURE", 6);
-Movie_Classifications::printClassifications();
-echo "<br>";

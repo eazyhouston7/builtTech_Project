@@ -12,7 +12,9 @@ class Customer
      */
     private $rentals;
 
-    
+    // new
+    private $frequentRenterPoints;  // Amount of loyalty points the customer has accumulated
+    private $totalDue;  // Amount in Dollars the Customer Owes
 
     /**
      * @param string $name
@@ -21,6 +23,8 @@ class Customer
     {
         $this->name = $name;
         $this->rentals = [];
+        $this->frequentRenterPoints = 0;
+        $this->totalDue = 0;
     }
 
     /**
@@ -38,6 +42,18 @@ class Customer
     {
         $this->rentals[] = $rental;
     }
+
+    //new
+    public function frequentRenterPoints() {
+      return $this->frequentRenterPoints;
+    }
+
+    //new
+    public function totalDue() {
+      return $this->totalDue;
+    }
+
+
 
     /**
      * @return string
