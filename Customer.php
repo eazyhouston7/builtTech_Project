@@ -53,7 +53,15 @@ class Customer
     }
 
     public function setFrequentRenterPoints($amount) {
+      $this->frequentRenterPoints = $amount;
+    }
+
+    public function addFrequentRenterPoints($amount) {
       $this->frequentRenterPoints += $amount;
+    }
+
+    public function removeFrequentRenterPoints($amount) {
+      $this->frequentRenterPoints -= $amount;
     }
 
     //new
@@ -61,12 +69,22 @@ class Customer
       return $this->totalDue;
     }
 
+    public function setTotalDue($amount) {
+      $this->totalDue = $amount;
+    }
 
+    public function addToTotalDue($amount) {
+      $this->totalDue += $amount;
+    }
+
+    public function removeFromTotalDue($amount) {
+      $this->totalDue -= $amount;
+    }
 
     /**
      * @return string
      */
-    public function statement()
+     public function statement()
     {
         $totalAmount = 0;
         $frequentRenterPoints = 0;
@@ -117,48 +135,17 @@ class Customer
       No params, returns html
     */
     public function htmlStatement() {
-      $toReturn = "<h1>Rental Record for <em>".$this->name()."</em></h1>";
-      $toReturn.="<ul>";
-
-      $totalAmount = 0;
-      $frequentRenterPoints = 0;
-
+      $toReturn = "<h1>Rental Record for <em>".$this->name()."</em></h1><ul>";
       foreach($this->rentals as $rental) {
         $toReturn.="<li>".$rental->movie()->name()." - ";
-        $thisAmount = 0;
-
-        switch($rental->movie()->priceCode()) {
-            case Movie::REGULAR:
-                $thisAmount += 2;
-                if ($rental->daysRented() > 2) {
-                    $thisAmount += ($rental->daysRented() - 2) * 1.5;
-                }
-                break;
-            case Movie::NEW_RELEASE:
-                $thisAmount += $rental->daysRented() * 3;
-                break;
-            case Movie::CHILDRENS:
-                $thisAmount += 1.5;
-                if ($rental->daysRented() > 3) {
-                    $thisAmount += ($rental->daysRented() - 3) * 1.5;
-                }
-                break;
-        }
-
-        $totalAmount += $thisAmount;
-
-        $frequentRenterPoints++;
-
-        if ($rental->movie()->priceCode() === Movie::NEW_RELEASE && $rental->daysRented() > 1) {
-            $frequentRenterPoints++;
-        }
+        $thisAmount = Price::calculatePrice($rental);
+        $this->addToTotalDue($thisAmount);
+        $this->addFrequentRenterPoints(Points::calculatePoints($rental));
 
         $toReturn .= $thisAmount."</li>";
       }
       $toReturn.="</ul>";
-
-      $toReturn.="<p>Amount owed is <em>".$totalAmount."</em><p>You earned <em>".$frequentRenterPoints." </em> frequent renter points</p>";
-
+      $toReturn.="<p>Amount owed is <em>".$this->totalDue()."</em><p>You earned <em>".$this->frequentRenterPoints()." </em> frequent renter points</p>";
       return $toReturn;
     }
     /* End of the htmlStatement() func */
